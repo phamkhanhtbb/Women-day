@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Chúc Mừng 8/3 💕</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Quicksand:wght@400;600&family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;700&family=Pacifico&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink: #ff6b8a;
+      --pink-light: #ffb3c6;
+      --deep: #0d0618;
+      --card-bg: rgba(30, 12, 40, 0.85);
+      --card-border: rgba(255, 107, 138, 0.2);
+    }
+
+    body {
+      background: var(--deep);
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+    }
+
+    #galaxyCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ========== SCREENS ========== */
+    .screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+      transform: translateZ(0);
+    }
+
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateZ(0) scale(0.95);
+    }
+
+    /* ========== SCREEN 1: PIN ========== */
+    .pin-card {
+      background: rgba(22, 10, 32, 0.96);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 44px 40px 36px;
+      width: min(360px, 90vw);
+      /* BỎ backdrop-filter: blur — gây khựng khi animate */
+      box-shadow: 0 0 60px rgba(255, 107, 138, 0.12), 0 20px 50px rgba(0, 0, 0, 0.5);
+      animation: cardFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .pin-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--pink);
+      text-align: center;
+      margin-bottom: 24px;
+      letter-spacing: 2px;
+      line-height: 1.4;
+    }
+
+    .dots-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 107, 138, 0.4);
+      background: transparent;
+      transition: all 0.25s ease;
+    }
+
+    .dot.filled {
+      background: var(--pink);
+      border-color: var(--pink);
+      box-shadow: 0 0 10px rgba(255, 107, 138, 0.6);
+      transform: scale(1.15);
+    }
+
+    .dot.shake {
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      20% {
+        transform: translateX(-6px)
+      }
+
+      40% {
+        transform: translateX(6px)
+      }
+
+      60% {
+        transform: translateX(-4px)
+      }
+
+      80% {
+        transform: translateX(4px)
+      }
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .key {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: #fff;
+      font-size: 22px;
+      font-family: 'Space Mono', monospace;
+      padding: 18px 0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .key:hover {
+      background: rgba(255, 107, 138, 0.15);
+      border-color: rgba(255, 107, 138, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .key:active {
+      transform: scale(0.93);
+      background: rgba(255, 107, 138, 0.25);
+    }
+
+    .key.del {
+      color: var(--pink);
+      font-size: 18px;
+    }
+
+    .key.zero {
+      grid-column: 2;
+    }
+
+    .pin-hint {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.28);
+      font-size: 12px;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-height: 600px) {
+      .pin-card {
+        padding: 28px 32px 22px;
+        border-radius: 20px;
+      }
+
+      .pin-title {
+        font-size: 17px;
+        margin-bottom: 16px;
+      }
+
+      .dots-row {
+        margin-bottom: 18px;
+        gap: 16px;
+      }
+
+      .keypad {
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .key {
+        padding: 13px 0;
+        font-size: 18px;
+      }
+    }
+
+    /* ========== SCREEN 2: SCRATCH ========== */
+    .scratch-wrapper {
+      background: rgba(12, 5, 20, 0.97);
+      border-radius: 28px;
+      display: flex;
+      width: min(820px, 94vw);
+      min-height: 520px;
+      overflow: hidden;
+      /* Border gradient hồng → tím */
+      box-shadow:
+        0 0 0 1px rgba(255, 107, 138, 0.3),
+        0 0 80px rgba(255, 107, 138, 0.18),
+        0 0 160px rgba(199, 125, 255, 0.1),
+        0 30px 60px rgba(0, 0, 0, 0.6);
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .scratch-left {
+      flex: 1;
+      padding: 36px 40px 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      /* Viền phải nhẹ */
+      border-right: 1px solid rgba(255, 107, 138, 0.15);
+    }
+
+    /* Header giấy thư */
+    .letter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .letter-seal {
+      font-size: 26px;
+      filter: drop-shadow(0 0 8px rgba(255, 107, 138, 0.7));
+      animation: sealPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes sealPulse {
+
+      0%,
+      100% {
+        transform: scale(1) rotate(-5deg);
+      }
+
+      50% {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+
+    .letter-date {
+      font-family: 'Dancing Script', cursive;
+      font-size: 15px;
+      color: rgba(255, 107, 138, 0.6);
+      letter-spacing: 1px;
+    }
+
+    .scratch-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 34px;
+      line-height: 1.5;
+      padding-bottom: 5px;
+      text-align: left;
+      color: #ffb4b8;
+      /* Tone hồng giống ảnh nền cào */
+      text-transform: lowercase;
+      /* Đảm bảo giống ảnh "happy 8/3" */
+    }
+
+    .scratch-msg {
+      color: #ffe6eb;
+      /* Trắng ánh hồng */
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      line-height: 1.6;
+      font-weight: 500;
+      height: 450px;
+      /* Cố định chiều cao từ đầu để tránh giãn khung */
+      will-change: opacity, transform;
+      transform: translateZ(0);
+      text-align: left;
+    }
+
+    .scratch-msg .cursor-blink {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--pink);
+      vertical-align: text-bottom;
+      margin-left: 2px;
+      animation: cursorBlink 0.8s step-end infinite;
+    }
+
+    @keyframes cursorBlink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .scratch-hint {
+      color: rgba(255, 255, 255, 0.4);
+      font-family: 'Dancing Script', cursive;
+      font-size: 18px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .scratch-hint.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .letter-sig {
+      display: block;
+      text-align: right;
+      font-family: 'Dancing Script', cursive;
+      font-style: normal;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--pink-light);
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+      transition: text-shadow 1s ease;
+    }
+
+    .letter-sig.glow-effect {
+      animation: signatureGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes signatureGlow {
+      from {
+        text-shadow: 0 0 5px rgba(255, 107, 138, 0.4);
+      }
+
+      to {
+        text-shadow: 0 0 15px rgba(255, 107, 138, 0.9), 0 0 25px rgba(255, 107, 138, 0.6);
+      }
+    }
+
+    .hint-pulse {
+      animation: hintPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes hintPulse {
+
+      0%,
+      100% {
+        opacity: 0.3
+      }
+
+      50% {
+        opacity: 0.8
+      }
+    }
+
+    .scratch-right {
+      width: 300px;
+      min-height: 520px;
+      position: relative;
+      background: linear-gradient(160deg, #1a0930 0%, #0d0618 60%, #150828 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      contain: content;
+      transform: translateZ(0);
+    }
+
+    .reveal-images {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    /* === INITIAL FULL IMAGE === */
+    #initialImg {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 70%;
+      height: 70%;
+      object-fit: cover;
+      border-radius: 16px;
+      /* Thêm xíu viền mềm mại */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      /* Thêm bóng đổ giúp ảnh nổi lên */
+      z-index: 1;
+      /* Dưới reveal-images (nơi tụi Polaroid z-index 10+) và canvas (z-index 4) */
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    #initialImg.fade-out {
+      opacity: 0;
+      transform: scale(0.85);
+      /* Thu nhỏ dần khi mờ */
+      pointer-events: none;
+    }
+
+    /* === MỚI: HIỆU ỨNG BAY BỔNG CHO THẺ CÀO === */
+    .animated-float {
+      animation: floatCardItem 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCardItem {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(1deg);
+      }
+    }
+
+    /* === POLAROID STYLES === */
+    .polaroid {
+      position: absolute;
+      background: #fff;
+      padding: 8px 8px 30px 8px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+      cursor: grab;
+      border-radius: 2px;
+      user-select: none;
+      touch-action: none;
+      will-change: transform;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .polaroid:active {
+      cursor: grabbing;
+    }
+
+    .polaroid.dragging {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.4);
+      transform: var(--base-rotate) scale(1.07) !important;
+      z-index: 999 !important;
+      cursor: grabbing;
+    }
+
+    .polaroid img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+      pointer-events: none;
+    }
+
+    /* Fullscreen overlay */
+    #photoOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    #photoOverlay.show {
+      display: flex;
+      animation: overlayIn 0.3s ease;
+    }
+
+    @keyframes overlayIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #photoOverlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      animation: photoZoomIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes photoZoomIn {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* === MOUSE TRAIL SPARKLES === */
+    .mouse-sparkle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ffb3c6, 0 0 16px #c77dff;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%) scale(0);
+      animation: mouseTrail 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes mouseTrail {
+      0% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(calc(-50% + var(--vx)), calc(-50% + var(--vy))) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* === SCRATCH DEBRIS CHÂN THỰC === */
+    .scratch-debris {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #aaa;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 10;
+      animation: debrisFall 0.8s ease-in forwards;
+    }
+
+    @keyframes debrisFall {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(var(--s, 1));
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--vx), var(--vy)) rotate(var(--rot)) scale(var(--s, 1));
+        opacity: 0;
+      }
+    }
+
+
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 70%;
+      height: 70%;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 138, 0.4);
+      cursor: none;
+      touch-action: none;
+      z-index: 4;
+      transition: opacity 1.2s ease, filter 0.5s ease;
+    }
+
+    #scratchCanvas:active {
+      filter: brightness(1.1);
+    }
+
+    .sparkle-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #fff, 0 0 12px #ffb3c6, 0 0 20px #c77dff;
+      pointer-events: none;
+      z-index: 10;
+      animation: sparkleFall 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes sparkleFall {
+      0% {
+        transform: translate(0, 0) scale(1.5);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--vx), var(--vy)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    .scratch-label {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      pointer-events: none;
+      text-align: center;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scratch-label .hand {
+      font-size: 32px;
+      animation: handBounce 1.2s ease-in-out infinite;
+    }
+
+    @keyframes handBounce {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-10deg)
+      }
+
+      50% {
+        transform: translateY(-8px) rotate(10deg)
+      }
+    }
+
+    #musicBtn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 100;
+      background: rgba(20, 10, 30, 0.85);
+      border: 1px solid rgba(255, 107, 138, 0.3);
+      border-radius: 50px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(16, 8, 24, 0.95);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      outline: none;
+    }
+
+    #musicBtn:hover {
+      background: rgba(255, 107, 138, 0.15);
+      border-color: var(--pink);
+      transform: translateY(-2px);
+    }
+
+    .yt-icon {
+      width: 22px;
+      height: 16px;
+      background: #ff0000;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .yt-icon::after {
+      content: '';
+      border-left: 8px solid white;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      margin-left: 2px;
+    }
+
+    .note-icon {
+      font-size: 14px;
+    }
+
+    .heart-float {
+      position: fixed;
+      font-size: var(--fs);
+      animation: heartRise var(--dur) ease-out forwards;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+    }
+
+    @keyframes heartRise {
+      0% {
+        transform: translateY(0) scale(0);
+        opacity: 0
+      }
+
+      10% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1)
+      }
+
+      80% {
+        opacity: 0.6
+      }
+
+      100% {
+        transform: translateY(-160px) scale(0.5) rotate(var(--rot));
+        opacity: 0
+      }
+    }
+
+    .confetti-piece {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: confettiFall var(--dur) ease-out forwards;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0
+      }
+    }
+
+    /* ========== MOBILE RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        display: block;
+        /* Disable flex centering on body */
+      }
+
+      .screen {
+        align-items: flex-start;
+        /* Start from top so it doesn't clip when taller than screen */
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 30px 0 90px 0;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .pin-card {
+        margin: 10vh auto 0 auto;
+      }
+
+      /* Scratch card: xếp dọc thay vì ngang */
+      .scratch-wrapper {
+        flex-direction: column;
+        width: 94vw;
+        /* Slightly more safe space */
+        height: auto;
+        min-height: unset;
+        border-radius: 20px;
+        margin: 2vh auto;
+      }
+
+      .scratch-left {
+        padding: 24px 20px 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 107, 138, 0.15);
+      }
+
+      .scratch-title {
+        font-size: 28px;
+        line-height: 1.3;
+      }
+
+      .scratch-msg {
+        font-size: 20px;
+        /* Giảm nhẹ để vừa chữ */
+        line-height: 1.45;
+        height: auto;
+        min-height: 250px;
+        /* Chống nhảy layout khi type chữ */
+      }
+
+      .letter-sig {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+
+      .scratch-hint {
+        font-size: 15px;
+        margin-top: 12px;
+      }
+
+      /* Vùng cào/ảnh chiếm toàn bộ chiều rộng */
+      .scratch-right {
+        width: 100%;
+        min-height: 340px;
+        height: 340px;
+      }
+
+      #initialImg,
+      #scratchCanvas {
+        width: 70%;
+        height: 70%;
+      }
+
+      /* Polaroid nhỏ hơn trên mobile */
+      .polaroid {
+        padding: 5px 5px 20px 5px;
+      }
+
+      .polaroid img {
+        width: 80px;
+        height: 80px;
+      }
+
+      /* Overlay ảnh phóng to */
+      #photoOverlay img {
+        max-width: 94vw;
+        max-height: 80vh;
+      }
+
+      /* Nút nhạc */
+      #musicBtn {
+        bottom: 12px;
+        left: 12px;
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+    }
+
+    /* Màn hình rất nhỏ (iPhone SE, vv) */
+    @media (max-width: 400px) {
+      .scratch-wrapper {
+        width: 96vw;
+      }
+
+      .scratch-title {
+        font-size: 24px;
+      }
+
+      .scratch-msg {
+        font-size: 18px;
+        min-height: 230px;
+      }
+
+      .scratch-right {
+        height: 300px;
+        min-height: 300px;
+      }
+
+      .polaroid img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .polaroid {
+        padding: 4px 4px 16px 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="galaxyCanvas"></canvas>
+
+  <div class="screen" id="pinScreen">
+    <div class="pin-card">
+      <div class="pin-title">Ngày Ta Gặp Nhau 💕</div>
+      <div class="dots-row" id="dotsRow">
+        <div class="dot" id="d0"></div>
+        <div class="dot" id="d1"></div>
+        <div class="dot" id="d2"></div>
+        <div class="dot" id="d3"></div>
+      </div>
+      <div class="keypad">
+        <div class="key" onclick="pressKey('1')">1</div>
+        <div class="key" onclick="pressKey('2')">2</div>
+        <div class="key" onclick="pressKey('3')">3</div>
+        <div class="key" onclick="pressKey('4')">4</div>
+        <div class="key" onclick="pressKey('5')">5</div>
+        <div class="key" onclick="pressKey('6')">6</div>
+        <div class="key" onclick="pressKey('7')">7</div>
+        <div class="key" onclick="pressKey('8')">8</div>
+        <div class="key" onclick="pressKey('9')">9</div>
+        <div class="key zero" onclick="pressKey('0')">0</div>
+        <div class="key del" onclick="pressDelete()">✕</div>
+      </div>
+      <div class="pin-hint">💡 Gợi ý: Ngày kỷ niệm</div>
+    </div>
+  </div>
+
+  <div class="screen hidden" id="scratchScreen">
+    <div class="scratch-wrapper">
+      <div class="scratch-left">
+        <div class="letter-header">
+          <span class="letter-seal">💌</span>
+          <span class="letter-date">08 · 03 · 2026</span>
+        </div>
+        <div class="scratch-title">Happy Women's Day 🌸</div>
+        <div class="scratch-msg" id="scratchMsg"></div>
+        <div class="scratch-hint">
+          <span class="hint-pulse">☞</span>
+          <span>Cào nhẹ tấm thẻ để xem điều bất ngờ...</span>
+        </div>
+      </div>
+      <div class="scratch-right" id="scratchRight">
+        <!-- Ảnh 18 tĩnh ban đầu -->
+        <img id="initialImg" class="animated-float" src="18.png" alt="Ảnh 18" />
+        <div class="reveal-images" id="revealImages"></div>
+        <canvas id="scratchCanvas" class="animated-float"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" src="bgm.mp3" loop></audio>
+  <button id="musicBtn" onclick="toggleMusic()">
+    <span class="note-icon">🎵</span>
+    <span id="musicText">Play Music</span>
+  </button>
+
+  <div id="photoOverlay" onclick="closeOverlay()">
+    <img id="overlayImg" src="" alt="" />
+  </div>
+
+  <script>
+    // ============ GALAXY BACKGROUND ============
+    (function () {
+      const canvas = document.getElementById('galaxyCanvas');
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+      window.addEventListener('mousemove', e => {
+        mouse.tx = (e.clientX / window.innerWidth - 0.5);
+        mouse.ty = (e.clientY / window.innerHeight - 0.5);
+
+        // Sinh hạt lấp lánh theo đuôi chuột (rate-limited)
+        if (Math.random() < 0.3) {
+          const sp = document.createElement('div');
+          sp.className = 'mouse-sparkle';
+          sp.style.left = e.pageX + 'px';
+          sp.style.top = e.pageY + 'px';
+          sp.style.setProperty('--vx', (Math.random() - 0.5) * 40 + 'px');
+          sp.style.setProperty('--vy', Math.random() * 40 + 10 + 'px');
+          document.body.appendChild(sp);
+          setTimeout(() => sp.remove(), 1000);
+        }
+      });
+
+      const COLORS = [
+        [255, 143, 171], [199, 125, 255], [255, 179, 198],
+        [255, 107, 138], [248, 164, 200], [255, 255, 255],
+        [187, 134, 252], [220, 180, 220],
+      ];
+
+      const COUNT = 180;
+      const parts = [];
+
+      function makePart(randomY = false) {
+        const depth = Math.random();
+        const rgb = COLORS[Math.floor(Math.random() * COLORS.length)];
+        return {
+          x: Math.random() * canvas.width,
+          y: randomY ? Math.random() * canvas.height : canvas.height + Math.random() * 100,
+          depth,
+          size: 0.5 + depth * 2.5,
+          // Tốc độ bay lên (chỉnh tại đây) — hiện tại chậm theo user đã set
+          speed: 0.2 + depth * 0.8 + Math.random() * 0.5,
+          driftA: 0.3 + Math.random() * 0.6,
+          driftF: 0.008 + Math.random() * 0.008,
+          phase: Math.random() * Math.PI * 2,
+          alpha: 0.4 + depth * 0.55,
+          rgb,
+        };
+      }
+
+      for (let i = 0; i < COUNT; i++) parts.push(makePart(true));
+
+      let frame = 0;
+
+      function drawBgGlow() {
+        const cx = canvas.width / 2 + mouse.x * 25;
+        const cy = canvas.height / 2 + mouse.y * 18;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, canvas.width * 0.45);
+        g.addColorStop(0, 'rgba(150,30,90,0.42)');
+        g.addColorStop(0.45, 'rgba(70,10,55,0.22)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // ── Sprite cache: render gradient + white core vào offscreen canvas 1 lần
+      // Khi animate chỉ cần drawImage → không tốn CPU cho createRadialGradient mỗi frame
+      const spriteCache = new Map();
+
+      function getSprite(r, g, b, size) {
+        const key = `${r},${g},${b},${size.toFixed(1)}`;
+        if (spriteCache.has(key)) return spriteCache.get(key);
+
+        const radius = size * 4;
+        const dim = radius * 2 + 2;
+        const oc = document.createElement('canvas');
+        oc.width = oc.height = dim;
+        const ox = oc.getContext('2d');
+        const cx = dim / 2, cy = dim / 2;
+
+        // Glow gradient (y hệt bản gốc)
+        ox.globalCompositeOperation = 'lighter';
+        const grd = ox.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        grd.addColorStop(0, `rgba(${r},${g},${b},1)`);
+        grd.addColorStop(0.4, `rgba(${r},${g},${b},0.3)`);
+        grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+        ox.fillStyle = grd;
+        ox.beginPath();
+        ox.arc(cx, cy, radius, 0, Math.PI * 2);
+        ox.fill();
+
+        // Lõi trắng sáng nhỏ (y hệt bản gốc)
+        ox.globalAlpha = 0.9;
+        ox.fillStyle = 'rgba(255,255,255,1)';
+        ox.beginPath();
+        ox.arc(cx, cy, size * 0.5, 0, Math.PI * 2);
+        ox.fill();
+
+        spriteCache.set(key, oc);
+        return oc;
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        frame++;
+
+        mouse.x += (mouse.tx - mouse.x) * 0.04;
+        mouse.y += (mouse.ty - mouse.y) * 0.04;
+
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#0d0618';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drawBgGlow();
+
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (const p of parts) {
+          p.y -= p.speed;
+
+          if (p.y < -10) {
+            p.x = Math.random() * canvas.width;
+            p.y = canvas.height + Math.random() * 40;
+            p.phase = Math.random() * Math.PI * 2;
+            continue;
+          }
+
+          const sway = Math.sin(frame * p.driftF + p.phase) * p.driftA;
+          const px = p.x + sway + mouse.x * p.depth * 15;
+          const py = p.y + mouse.y * p.depth * 10;
+          const prog = 1 - (p.y / canvas.height);
+          const alpha = Math.max(0, Math.sin(Math.min(prog * 1.8, Math.PI))) * p.alpha;
+
+          if (alpha < 0.02) continue;
+
+          const [r, g2, b] = p.rgb;
+          const sp = getSprite(r, g2, b, p.size);
+
+          ctx.globalAlpha = alpha;
+          ctx.drawImage(sp, px - sp.width / 2, py - sp.height / 2);
+        }
+
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      animate();
+    })();
+
+    // ============ PIN LOGIC ============
+    const CORRECT_PIN = '1301';
+    let pinInput = '';
+
+    function pressKey(num) {
+      if (pinInput.length >= 4) return;
+      pinInput += num;
+      updateDots();
+      if (pinInput.length === 4) setTimeout(checkPin, 300);
+    }
+
+    function pressDelete() {
+      pinInput = pinInput.slice(0, -1);
+      updateDots();
+    }
+
+    function updateDots() {
+      for (let i = 0; i < 4; i++) {
+        document.getElementById('d' + i).classList.toggle('filled', i < pinInput.length);
+      }
+    }
+
+    function checkPin() {
+      if (pinInput === CORRECT_PIN) {
+        const bgm = document.getElementById('bgMusic');
+        bgm.play().catch(() => console.log('Autoplay prevented'));
+        document.getElementById('musicText').textContent = 'Pause Music';
+
+        spawnHearts();
+        setTimeout(() => {
+          document.getElementById('pinScreen').classList.add('hidden');
+          const scratchScreen = document.getElementById('scratchScreen');
+          scratchScreen.classList.remove('hidden');
+          // Chữ chạy ngay sau khi màn hình scratch xuất hiện
+          setTimeout(() => {
+            typewrite(document.getElementById('scratchMsg'), message, 75, () => {
+              // Khi gõ xong chữ:
+              document.querySelector('.scratch-hint').classList.add('show'); // Hiện chữ cào nhẹ
+              const sig = document.querySelector('.letter-sig');
+              if (sig) sig.classList.add('glow-effect'); // Bật phát sáng cho chữ ký
+            });
+          }, 600);
+        }, 800);
+      } else {
+        document.querySelectorAll('.dot').forEach(d => {
+          d.classList.add('shake');
+          setTimeout(() => d.classList.remove('shake'), 500);
+        });
+        pinInput = '';
+        setTimeout(updateDots, 500);
+      }
+    }
+
+    function spawnHearts() {
+      const emojis = ['💕', '💖', '🌸', '💗', '✨', '💝'];
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          const h = document.createElement('div');
+          h.className = 'heart-float';
+          h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          const size = 20 + Math.random() * 24;
+          h.style.cssText = `left:${30 + Math.random() * 40}%;bottom:${20 + Math.random() * 40}%;
+        --fs:${size}px;--dur:${1.2 + Math.random() * 0.8}s;--rot:${(Math.random() - 0.5) * 40}deg;`;
+          document.body.appendChild(h);
+          setTimeout(() => h.remove(), 2200);
+        }, i * 80);
+      }
+    }
+
+    // ============ SCRATCH CARD ============
+    const slides = [
+      `<img src="1.png" alt="Ảnh 1"/>`,
+      `<img src="2.png" alt="Ảnh 2"/>`,
+      `<img src="3.png" alt="Ảnh 3"/>`,
+      `<img src="4.png" alt="Ảnh 4"/>`,
+      `<img src="5.png" alt="Ảnh 5"/>`,
+      `<img src="6.png" alt="Ảnh 6"/>`,
+      `<img src="7.png" alt="Ảnh 7"/>`,
+      `<img src="8.png" alt="Ảnh 8"/>`,
+      `<img src="9.png" alt="Ảnh 9"/>`,
+      `<img src="10.png" alt="Ảnh 10"/>`,
+      `<img src="11.png" alt="Ảnh 11"/>`,
+      `<img src="12.png" alt="Ảnh 12"/>`,
+      `<img src="13.png" alt="Ảnh 13"/>`,
+      `<img src="14.png" alt="Ảnh 14"/>`,
+      `<img src="15.png" alt="Ảnh 15"/>`,
+      `<img src="16.png" alt="Ảnh 16"/>`,
+      `<img src="17.png" alt="Ảnh 17"/>`,
+    ];
+
+
+
+    // ✏️ CHỈNH NỘI DUNG THƯ TẠI ĐÂY — dùng \n để xuống dòng
+    const message =
+      `Chúc mừng 8/3 người con gái đặc biệt nhất của toi! 
+Người ta bảo dân IT như toi chỉ biết đến logic, nhưng có một điều không logic chút nào là Khánh lại lỡ đắm say một cô nàng mất rồi.
+Cảm ơn cô ấy đã xuất hiện để cân bằng lại cuộc sống của toi, biến những trang nhật ký của toi thành những màu sắc rực rỡ. 
+Chúc Trang luôn hạnh phúc, tỏa sáng theo cách riêng của mình, và hãy cứ yên tâm tiến về phía trước vì Khánh luôn ở đây ủng hộ cổ hết mình. 🌸💕
+~ Phạm Nam Khánh`;
+
+    let scratchInitialized = false;
+
+    function initScratch() {
+      if (scratchInitialized) return;
+      scratchInitialized = true;
+
+      const right = document.getElementById('scratchRight');
+      const canvas = document.getElementById('scratchCanvas');
+      const ctx = canvas.getContext('2d');
+      let scratching = false;
+      let revealed = false;
+
+      // Tạo custom cursor 🌸 từ emoji vẽ lên offscreen canvas
+      (function applyEmojiCursor() {
+        const size = 40;
+        const oc = document.createElement('canvas');
+        oc.width = oc.height = size;
+        const ox = oc.getContext('2d');
+        ox.font = `${size - 4}px serif`;
+        ox.textAlign = 'center';
+        ox.textBaseline = 'middle';
+        ox.fillText('🌸', size / 2, size / 2);
+        canvas.style.cursor = `url(${oc.toDataURL()}) ${size / 2} ${size / 2}, auto`;
+      })();
+
+      requestAnimationFrame(() => {
+        const rect = canvas.getBoundingClientRect();
+        const W = rect.width || 260;
+        const H = rect.height || 380;
+        canvas.width = W;
+        canvas.height = H;
+
+        // 1. Phục hồi Gradient Soft Pink Bokeh (Giống hình tham khảo tuyệt đối)
+        const grad = ctx.createLinearGradient(0, 0, W, H);
+        grad.addColorStop(0, '#ffb4b8');     // Hồng pastel đào
+        grad.addColorStop(1, '#ffdfe5');     // Hồng kem sáng
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+
+        // 2. Hiệu ứng Bokeh (Những vòng tròn trắng mờ gối lên nhau)
+        for (let i = 0; i < 40; i++) {
+          ctx.beginPath();
+          const r = 10 + Math.random() * 35; // Size to nhỏ ngẫu nhiên
+          ctx.arc(Math.random() * W, Math.random() * H, r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.1 + Math.random() * 0.25})`; // Trắng mờ
+          ctx.fill();
+        }
+
+        // 3. Typography "Cào nhẹ" (Chữ màu trắng, bóng nhẹ)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 28px "Inter", "Quicksand", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.shadowColor = 'rgba(255, 150, 180, 0.4)';
+        ctx.shadowBlur = 6;
+        ctx.fillText('Cào nhẹ', W / 2, H / 2);
+
+        ctx.shadowBlur = 0; // reset shadow để không ảnh hưởng cọ
+
+        const totalArea = W * H;
+
+        let lastP = null;
+        let isDrawing = false;
+        let firstTouch = true;
+
+        const getPos = (e) => {
+          const cr = canvas.getBoundingClientRect();
+          const src = e.touches ? e.touches[0] : e;
+          return { x: (src.clientX - cr.left) * (W / cr.width), y: (src.clientY - cr.top) * (H / cr.height) };
+        };
+
+        const drawStart = (e) => {
+          if (firstTouch) {
+            firstTouch = false;
+            // Dừng bay bổng khi người dùng chạm vào (dừng ngầm để tránh lệch pixel)
+            canvas.classList.remove('animated-float');
+            const initImg = document.getElementById('initialImg');
+            if (initImg) initImg.classList.remove('animated-float');
+
+            // Xóa transform đang dở dang
+            canvas.style.transform = 'none';
+            if (initImg) initImg.style.transform = 'none';
+          }
+          isDrawing = true;
+          lastP = getPos(e);
+          drawMove(e);
+        };
+
+        const drawMove = (e) => {
+          if (!isDrawing) return;
+          const p = getPos(e);
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.lineWidth = 45; // Cọ cào to hơn
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          if (lastP) ctx.moveTo(lastP.x, lastP.y);
+          else ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+          lastP = p;
+
+          // Tạo hạt lấp lánh ngẫu nhiên (Sparkle)
+          if (Math.random() < 0.35) {
+            const sp = document.createElement('div');
+            sp.className = 'sparkle-particle';
+            sp.style.left = (p.x + canvas.offsetLeft) + 'px';
+            sp.style.top = (p.y + canvas.offsetTop) + 'px';
+
+            // Sparkle tông hồng/trắng sáng
+            sp.style.boxShadow = '0 0 5px #fff, 0 0 10px #ffb3c6, 0 0 15px #ff8fab';
+
+            sp.style.setProperty('--vx', (Math.random() - 0.5) * 80 + 'px');
+            sp.style.setProperty('--vy', Math.random() * 80 + 30 + 'px');
+            document.getElementById('scratchRight').appendChild(sp);
+            setTimeout(() => sp.remove(), 800);
+          }
+
+          // Tạo hạt vụn thẻ cào vật lý rời rụng (Foil Debris)
+          if (Math.random() < 0.5) {
+            const amount = Math.floor(Math.random() * 2) + 1;
+            for (let j = 0; j < amount; j++) {
+              const debris = document.createElement('div');
+              debris.className = 'scratch-debris';
+              const dx = (Math.random() - 0.5) * 30; // Chệch ra xung quanh cọ
+              const dy = (Math.random() - 0.5) * 30;
+              debris.style.left = (p.x + canvas.offsetLeft + dx) + 'px';
+              debris.style.top = (p.y + canvas.offsetTop + dy) + 'px';
+
+              // Debris Mảng nhũ sáng pastel hồng
+              const colors = ['#f2709c', '#ff9472', '#ffb88c', '#ffffff', '#ffb3c6', '#ff8fab'];
+              debris.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+              debris.style.setProperty('--vx', (Math.random() - 0.5) * 80 + 'px');
+              debris.style.setProperty('--vy', Math.random() * 120 + 40 + 'px');
+              debris.style.setProperty('--rot', Math.random() * 360 + 'deg');
+              debris.style.setProperty('--s', 0.6 + Math.random() * 0.6); // Scale random size
+              document.getElementById('scratchRight').appendChild(debris);
+              setTimeout(() => debris.remove(), 800);
+            }
+          }
+        };
+
+        const drawEnd = () => {
+          if (!isDrawing) return;
+          isDrawing = false;
+          lastP = null;
+          checkReveal();
+        };
+
+        const checkReveal = () => {
+          if (revealed) return;
+          const data = ctx.getImageData(0, 0, W, H).data;
+          let cleared = 0;
+          for (let i = 3; i < data.length; i += 4) if (data[i] < 128) cleared++;
+          if (cleared / totalArea > 0.45) {
+            revealed = true;
+            canvas.style.pointerEvents = 'none';
+            canvas.style.opacity = '0'; // mờ màng che đi
+
+            setTimeout(() => {
+              ctx.clearRect(0, 0, W, H); // dọn sạch canvas
+
+              // Mờ ảnh 18 đi
+              const initImg = document.getElementById('initialImg');
+              if (initImg) initImg.classList.add('fade-out');
+
+              // Đợi ảnh 18 mờ xong thì tung 17 ảnh Polaroid ra
+              setTimeout(() => {
+                if (initImg) initImg.style.display = 'none';
+                startSlideshow(); // Hàm này đang gọi scatterPolaroids()
+              }, 1000);
+
+              launchConfetti();
+            }, 1200); // Đợi canvas mờ xong
+          }
+        };
+
+        canvas.addEventListener('mousedown', drawStart);
+        canvas.addEventListener('mousemove', drawMove);
+        canvas.addEventListener('mouseup', drawEnd);
+        window.addEventListener('mouseup', drawEnd);
+        canvas.addEventListener('touchstart', e => { e.preventDefault(); drawStart(e); }, { passive: false });
+        canvas.addEventListener('touchmove', e => { e.preventDefault(); drawMove(e); }, { passive: false });
+        canvas.addEventListener('touchend', drawEnd);
+      });
+    }
+
+    // Typewriter: gõ từng ký tự
+    let typewriterTimer = null;
+    function typewrite(el, text, speed = 38, onComplete = null) {
+      if (typewriterTimer) clearTimeout(typewriterTimer);
+      // Tách các dòng, xử lý dòng ~ riêng
+      const lines = text.split('\n');
+      el.innerHTML = '';
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor-blink';
+      el.appendChild(cursor);
+
+      // Flat toàn bộ thành chuỗi ký tự + thông tin dòng
+      const chars = [];
+      lines.forEach((line, li) => {
+        const isSig = line.startsWith('~');
+        const content = isSig ? line.slice(1).trim() : line;
+        [...content].forEach(ch => chars.push({ ch, isSig, newlineBefore: false }));
+        if (li < lines.length - 1) chars.push({ ch: '\n', isSig: false, isBreak: true });
+      });
+
+      let i = 0;
+      let currentSig = null;
+
+      function tick() {
+        if (i < chars.length) {
+          const { ch, isSig, isBreak } = chars[i++];
+          if (isBreak) {
+            el.insertBefore(document.createElement('br'), cursor);
+            currentSig = null;
+          } else if (isSig) {
+            if (!currentSig) {
+              currentSig = document.createElement('span');
+              currentSig.className = 'letter-sig';
+              el.insertBefore(currentSig, cursor);
+            }
+            currentSig.textContent += ch;
+          } else {
+            el.insertBefore(document.createTextNode(ch), cursor);
+            currentSig = null;
+          }
+          typewriterTimer = setTimeout(tick, ch === ',' || ch === '.' ? speed * 6 : ch === '\n' ? speed * 8 : speed);
+        } else {
+          setTimeout(() => {
+            cursor.style.display = 'none';
+            if (onComplete) onComplete();
+          }, 1200);
+        }
+      }
+      tick();
+    }
+
+    function startSlideshow() {
+      scatterPolaroids();
+    }
+
+    function scatterPolaroids() {
+      const container = document.getElementById('revealImages');
+      const W = container.offsetWidth || 300;
+      const H = container.offsetHeight || 520;
+
+      let zTop = 10;
+
+      slides.forEach((imgStr, idx) => {
+        // Lấy src từ template string
+        const tmp = document.createElement('div');
+        tmp.innerHTML = imgStr;
+        const src = tmp.querySelector('img').src || tmp.querySelector('img').getAttribute('src');
+
+        const card = document.createElement('div');
+        card.className = 'polaroid';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Photo ' + (idx + 1);
+        card.appendChild(img);
+        container.appendChild(card);
+
+        // Vị trí và góc xoay ngẫu nhiên
+        const rot = (Math.random() - 0.5) * 50; // -25 đến +25 độ
+        const x = Math.random() * (W - 140) + 5;
+        const y = Math.random() * (H - 160) + 5;
+        card.style.setProperty('--base-rotate', `rotate(${rot}deg)`);
+        card.style.zIndex = idx + 1;
+
+        // Phân tán: khởi đầu từ giữa, bay ra vị trí ngẫu nhiên
+        card.style.left = (W / 2 - 67) + 'px';
+        card.style.top = (H / 2 - 75) + 'px';
+        card.style.transform = `rotate(${rot}deg) scale(0)`;
+        card.style.opacity = '0';
+        card.style.transition = 'none';
+
+        setTimeout(() => {
+          card.style.transition = `left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                                   top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                                   transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                                   opacity 0.4s ease`;
+          card.style.left = x + 'px';
+          card.style.top = y + 'px';
+          card.style.transform = `rotate(${rot}deg) scale(1)`;
+          card.style.opacity = '1';
+        }, 80 + idx * 60);
+
+        // DRAG: mouse
+        let dragging = false, startX, startY, origLeft, origTop;
+
+        card.addEventListener('mousedown', (e) => {
+          if (e.detail >= 2) return; // double-click — bỏ qua
+          dragging = true;
+          startX = e.clientX; startY = e.clientY;
+          origLeft = parseFloat(card.style.left);
+          origTop = parseFloat(card.style.top);
+          card.classList.add('dragging');
+          card.style.zIndex = ++zTop;
+          card.style.transition = 'box-shadow 0.15s ease';
+          e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+          if (!dragging) return;
+          card.style.left = (origLeft + e.clientX - startX) + 'px';
+          card.style.top = (origTop + e.clientY - startY) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+          if (!dragging) return;
+          dragging = false;
+          card.classList.remove('dragging');
+          card.style.transition = 'box-shadow 0.15s ease, transform 0.15s ease';
+        });
+
+        // DRAG: touch
+        card.addEventListener('touchstart', (e) => {
+          const t = e.touches[0];
+          dragging = true;
+          startX = t.clientX; startY = t.clientY;
+          origLeft = parseFloat(card.style.left);
+          origTop = parseFloat(card.style.top);
+          card.classList.add('dragging');
+          card.style.zIndex = ++zTop;
+          card.style.transition = 'box-shadow 0.15s ease';
+          e.preventDefault();
+        }, { passive: false });
+
+        card.addEventListener('touchmove', (e) => {
+          if (!dragging) return;
+          const t = e.touches[0];
+          card.style.left = (origLeft + t.clientX - startX) + 'px';
+          card.style.top = (origTop + t.clientY - startY) + 'px';
+          e.preventDefault();
+        }, { passive: false });
+
+        card.addEventListener('touchend', () => {
+          dragging = false;
+          card.classList.remove('dragging');
+        });
+
+        // FULLSCREEN: click / tap (Đổi từ double click sang single click)
+        card.addEventListener('click', () => {
+          // Bỏ qua nếu đang kéo thả
+          if (dragging) return;
+          document.getElementById('overlayImg').src = src;
+          document.getElementById('photoOverlay').classList.add('show');
+        });
+      });
+    }
+
+    function closeOverlay() {
+      document.getElementById('photoOverlay').classList.remove('show');
+    }
+
+    // Toggle Music
+    function toggleMusic() {
+      const bgm = document.getElementById('bgMusic');
+      const text = document.getElementById('musicText');
+      if (bgm.paused) {
+        bgm.play();
+        text.textContent = 'Pause Music';
+      } else {
+        bgm.pause();
+        text.textContent = 'Play Music';
+      }
+    }
+
+    function launchConfetti() {
+      const colors = ['#ff6b8a', '#ffb3c6', '#c77dff', '#ffe066', '#48cae4', '#ff8fab'];
+      for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+          const c = document.createElement('div');
+          c.className = 'confetti-piece';
+          c.style.cssText = `left:${Math.random() * 100}vw;top:-10px;
+        background:${colors[Math.floor(Math.random() * colors.length)]};
+        --dur:${1.5 + Math.random() * 2}s;
+        border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+        transform:rotate(${Math.random() * 360}deg);`;
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 3600);
+        }, i * 50);
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (document.getElementById('pinScreen').classList.contains('hidden')) return;
+      if (e.key >= '0' && e.key <= '9') pressKey(e.key);
+      if (e.key === 'Backspace' || e.key === 'Delete') pressDelete();
+    });
+
+    // Pre-init scratch khi trang vừa load (màn scratch vẫn ẩn)
+    // → khi PIN đúng chỉ cần reveal, không block main thread → galaxy không khựng
+    setTimeout(initScratch, 500);
+  </script>
+</body>
+
+</html>
